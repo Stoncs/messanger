@@ -1,0 +1,28 @@
+@import '../styles/colors.scss';
+@import '../styles/fonts.scss';
+
+.page404 {
+  font-family: $font-roboto;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $clr-light;
+  font-size: 60px;
+
+  &__number {
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    font-size: 0.5em;
+    margin-bottom: 30px;
+  }
+
+  a {
+    font-size: 0.25em;
+    color: $clr-blue;
+  }
+}

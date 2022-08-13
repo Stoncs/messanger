@@ -1,4 +1,4 @@
-import { Login, Messanger, Profile, Settings } from './pages';
+import { Login, Messanger, Profile, Settings, Page404 } from './pages';
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, MESSANGER_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from './utils/consts';
 
 export const authRoutes = [
@@ -24,5 +24,9 @@ export const publicRoutes = [
   {
     path: REGISTRATION_ROUTE,
     element: <Login />
+  },
+  {
+    path: '*',
+    element: <Page404 />
   }
 ];
