@@ -1,0 +1,14 @@
+@import './colors.scss';
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+.background-dark {
+  background-color: $clr-background-dark;
+}
+.btn {
+  background-color: $clr-blue;
+  color: $clr-light;
+  border-radius: 8px;
+}
