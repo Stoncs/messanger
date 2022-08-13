@@ -1,0 +1,12 @@
+@import './colors.scss';
+
+::-webkit-scrollbar { /* 1 - скроллбар */
+  width: 5px;
+  height: 4px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb { /* 5 - ползунок */
+  border-radius: 2px;
+  background-color: $clr-grey;
+}
