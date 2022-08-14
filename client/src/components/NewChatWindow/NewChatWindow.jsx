@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../http/userApi';
 import { createChat } from '../../http/chatApi';
 

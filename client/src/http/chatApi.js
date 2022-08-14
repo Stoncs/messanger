@@ -12,13 +12,12 @@ export const getAllChatsForUser = async (userId) => {
     const {data: lastMessage} = await $authHost.get(`api/messages/last/${chat.id}`);
     if (lastMessage[0]) {
       const {data: userInfo} = await $authHost.get(`api/users/${lastMessage[0].userId}`);
-      console.log({...chat, ...lastMessage[0]});
       allInfo.push({...chat, ...lastMessage[0], ...userInfo});
     } else {
       allInfo.push({...chat, ...lastMessage});
     }
   }
-  return {allInfo};
+  return allInfo;
 };
 
 // export const check = async () => {

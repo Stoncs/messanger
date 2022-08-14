@@ -4,9 +4,13 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import './ChatPreview.scss';
 import { MESSENGER_ROUTE } from '../../utils/consts';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedChat } from '../../redux/actions/chats';
 
 export default function ChatPreview({info}) {
-  // console.log(info);
+  const chatsState = useSelector(({chats}) => chats);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const srcImage = info.avatar_image
     ? process.env.REACT_APP_API_URL + info.avatar_image
@@ -22,8 +26,7 @@ export default function ChatPreview({info}) {
       text: 'Чат создан',
       date: info.createdAt
     };
-  
-  
+
   const getDateString = () => {
     const day = 86400000;
     if (Date.now() - new Date(lastMessage.date) < day) {
@@ -33,9 +36,18 @@ export default function ChatPreview({info}) {
     }
   };
 
+  const onClickChat = () => {
+    localStorage.setItem('selectedChat', JSON.stringify(chatsState.selectedChat));
+    dispatch(setSelectedChat({id: info.id, title: info.title}));
+    navigate(MESSENGER_ROUTE + info.id);
+  };
 
   return (
-    <div className='chat-preview' onClick={() => navigate(MESSENGER_ROUTE + info.id)}>
+    <div 
+      className={`chat-preview ${chatsState.selectedChat.id === info.id 
+        ? 'active' 
+        : ''}`}  
+      onClick={onClickChat}>
       <div className="chat-preview__image">
         <img src={srcImage} alt="chat-preview" />
       </div>

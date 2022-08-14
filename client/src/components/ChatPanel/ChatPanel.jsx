@@ -1,20 +1,25 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getAllMessagesChat, sendMessage } from '../../http/messageApi';
+import { setSelectedChat } from '../../redux/actions/chats';
+import { MESSENGER_ROUTE } from '../../utils/consts';
 import {Message} from '../index';
 
 import './ChatPanel.scss';
 
 export default function ChatPanel() {
+  const chatsState = useSelector(({chats}) => chats);
   const user = useSelector(({user}) => user.info);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   const {chatId} = useParams();
   const [messages, setMessages] = React.useState([]);
   const [messageInput, setMessageInput] = React.useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(chatId);
     if (messageInput) {
       sendMessage(chatId, user.id, messageInput);
       setMessageInput('');
@@ -31,6 +36,16 @@ export default function ChatPanel() {
     }
   };
 
+  // React.useEffect(() => {
+  //   if (chatsState.selectedChat.id) {
+  //     dispatch(setSelectedChat(JSON.parse(localStorage.getItem('selectedChat') || {})));
+  //   }
+  //   if (!chatsState.availableChats.map((item) => item.id).includes(Number(chatId))) {
+  //     console.log('redirectd');
+  //     navigate(MESSENGER_ROUTE);
+  //   }
+  // }, []);
+
   const $messagesArea = React.useRef();
   React.useEffect(() => {
     $messagesArea.current.scrollTop = $messagesArea.current.scrollHeight;
@@ -38,13 +53,12 @@ export default function ChatPanel() {
 
   React.useEffect(() => {
     getAllMessagesChat(chatId).then((messages) => setMessages(messages));
-    // getAllMessagesChat(chatId).then((messages) =>  console.log(messages));
   }, [chatId]);
 
   return (
     <div className='chat-panel'>
       <div className='chat-panel__header'>
-        lsdjfsdf
+        <div className='chat-panel__title' >{chatsState.selectedChat.title}</div>
       </div>
       <div ref={$messagesArea} className='chat-panel__messages-area'>
         {messages.map((message) => <Message key={message.id} messageInfo={message} />)}

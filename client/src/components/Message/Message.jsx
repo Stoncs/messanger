@@ -5,7 +5,6 @@ import 'moment/locale/ru';
 import './Message.scss';
 
 export default function Message({messageInfo}) {
-  console.log(messageInfo);
 
   const getDateString = () => {
     const day = 86400000;

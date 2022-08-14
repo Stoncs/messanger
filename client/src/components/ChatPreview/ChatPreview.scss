@@ -13,6 +13,11 @@
     background-color: $clr-background-dark-hover;
   }
 
+  &.active {
+    background-color: $clr-blue;
+    color: $clr-light;
+  }
+
   &__image {
     overflow: hidden;
     border-radius: 50%;
@@ -32,6 +37,9 @@
     font-weight: 600;
     margin-bottom: 10px;
     color: $clr-light;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   &__text {
     overflow: hidden;

@@ -24,19 +24,33 @@
 
   &__header {
     background-color: $clr-background-dark;
-    height: 40px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+  &__title {
+    width: 80%;
+    font-weight: 600;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   &__messages-area {
     overflow-y: scroll;
     background-color: $clr-background-light;
     flex-grow: 1;
+    height: 80%;
   }
   &__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: $clr-background-dark;
-    height: 100px;
+    height: 60px;
     
   }
 

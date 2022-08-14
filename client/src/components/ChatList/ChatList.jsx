@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllChatsForUser } from '../../http/chatApi';
+import { setAvailableChats } from '../../redux/actions/chats';
 import { setIsAuth, setUser } from '../../redux/actions/user';
 import { LOGIN_ROUTE, PROFILE_ROUTE } from '../../utils/consts';
 import {ChatPreview, NewChatWindow} from '../index';
@@ -10,8 +11,11 @@ import './ChatList.scss';
 
 export default function ChatList() {
   const user = useSelector(({user}) => user);
+  const chats = useSelector(({chats}) => chats);
+
   const [creatingNewChat, setCreatingNewChat] = React.useState(false);
-  const [chatsInfo, setChatsInfo] = React.useState({});
+  const [chatsInfo, setChatsInfo] = React.useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const logout = () => {
@@ -21,16 +25,26 @@ export default function ChatList() {
   };
 
   const getPreviews = () => {
-    const arr = [];
-    if (Array.isArray(chatsInfo))
-      for (const chatInfo of chatsInfo) {
-        arr.push(<ChatPreview key={chatInfo.id} info={chatInfo} />);
-      }
-    return arr;
+    return chats.availableChats.map((chat) => <ChatPreview key={chat.id} info={chat} />);
   };
+
   React.useEffect(() => {
-    getAllChatsForUser(user.info.id).then(result => setChatsInfo(result.allInfo));
-    // getAllChatsForUser(user.info.id).then(result => console.log(result.allInfo));
+    const compare = (a, b) => {
+      if (a.date) {
+        if (b.date) {
+          return new Date(b.date) - new Date(a.date);
+        } else {
+          return new Date(b.createdAt) - new Date(a.date);
+        }
+      } else {
+        if (b.date) {
+          return new Date(b.date) - new Date(a.createdAt);
+        } else {
+          return new Date(b.createdAt - new Date(a.createdAt));
+        }
+      }
+    };
+    getAllChatsForUser(user.info.id).then(result => dispatch(setAvailableChats(result.sort(compare))));
   }, []);
 
   return (

@@ -7,6 +7,7 @@ import { ChatPanel, EmptyChatPanel } from './components';
 
 export default function AppRouter() {
   const isAuth = useSelector(({user}) => user.isAuth);
+
   return (
     <Routes>
       {isAuth &&

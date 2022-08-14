@@ -1,6 +1,5 @@
-const Sequelize = require('../db');
 const ApiError = require('../error/ApiError');
-const { Chat, User_chat, User, Message } = require('../models/models');
+const { Chat, User_chat, User } = require('../models/models');
 
 class ChatController {
   async create(req, res) {
@@ -41,10 +40,6 @@ class ChatController {
       },
     });
 
-    console.log(result);
-    // const result = await Sequelize.query(
-    //   `SELECT chats.id, chats.title, messages.date, users.nickname, users.avatar_image FROM chats WHERE (${userId}, chats.id) IN (SELECT * FROM user_chats) JOIN messages ON chats.id = messages.chatId LEFT JOIN users ON messages.userId = ${userId}`,
-    // );
     return res.json(result);
   }
 

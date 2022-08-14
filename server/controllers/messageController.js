@@ -33,7 +33,7 @@ class MessageController {
         },
       },
     });
-    console.log(messagesChat);
+
     return res.json(messagesChat);
   }
 
