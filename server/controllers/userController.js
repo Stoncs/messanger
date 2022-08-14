@@ -26,7 +26,7 @@ class UserController {
 
     const avatar_image = 'default_user_avatar.png';
     const user = await User.create({ username, password: hashPassword, avatar_image });
-    const token = generateJwt(user.id, username);
+    const token = generateJwt(user.id, username, avatar_image);
     return res.json({ token });
   }
 
@@ -42,12 +42,12 @@ class UserController {
     if (!comparePassword) {
       return next(ApiError.internal('Ник или пароль не верный'));
     }
-    const token = generateJwt(user.id, user.username);
+    const token = generateJwt(user.id, user.username, user.avatar_image);
     return res.json({ token });
   }
 
   async check(req, res, next) {
-    const token = generateJwt(req.user.id, req.user.username);
+    const token = generateJwt(req.user.id, req.user.username, req.user.avatar_image);
     return res.json({ token });
   }
 

@@ -7,3 +7,4 @@ export {default as EmptyChatPanel} from './ChatPanel/EmptyChatPanel.jsx';
 export {default as ChatPreview} from './ChatPreview/ChatPreview.jsx';
 export {default as NewChatWindow} from './NewChatWindow/NewChatWindow.jsx';
 export {default as UserCard} from './UserCard/UserCard.jsx';
+export {default as Message} from './Message/Message.jsx';

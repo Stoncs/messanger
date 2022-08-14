@@ -1,0 +1,52 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.message {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: flex;
+  font-family: $font-roboto;
+
+  &__image {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 35px;
+    height : 35px;
+    img {
+      width: 35px;
+    }
+  }
+
+  &__container {
+    background-color: $clr-background-message;
+    font-size: 15px;
+    line-height: 1.25em;
+    align-self: center;
+    max-width: 50%;
+    min-width: 150px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    margin-left: 10px;
+    padding: 5px 10px;
+    display: flex;
+    color: $clr-light;
+  }
+
+  &__text {
+    flex-grow: 1;
+    p {
+      font-weight: 300;
+    }
+  }
+  &__username {
+    color: $clr-username;
+    font-size: 12px;
+  }
+  &__date {
+    display: block;
+    margin-left: 5px;
+    font-size: 10px;
+    line-height: 1em;
+    align-self: flex-end;
+  }
+}

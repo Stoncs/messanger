@@ -41,6 +41,7 @@ class ChatController {
       },
     });
 
+    console.log(result);
     // const result = await Sequelize.query(
     //   `SELECT chats.id, chats.title, messages.date, users.nickname, users.avatar_image FROM chats WHERE (${userId}, chats.id) IN (SELECT * FROM user_chats) JOIN messages ON chats.id = messages.chatId LEFT JOIN users ON messages.userId = ${userId}`,
     // );

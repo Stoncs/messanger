@@ -1,10 +1,13 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/ru';
 import './ChatPreview.scss';
+import { MESSENGER_ROUTE } from '../../utils/consts';
 
 export default function ChatPreview({info}) {
-  console.log(info);
+  // console.log(info);
+  const navigate = useNavigate();
   const srcImage = info.avatar_image
     ? process.env.REACT_APP_API_URL + info.avatar_image
     : process.env.REACT_APP_API_URL + 'default_user_avatar.png';
@@ -23,7 +26,6 @@ export default function ChatPreview({info}) {
   
   const getDateString = () => {
     const day = 86400000;
-    console.log(Date.now() - new Date(lastMessage.date));
     if (Date.now() - new Date(lastMessage.date) < day) {
       return moment(lastMessage.date).format('LT');
     } else {
@@ -33,7 +35,7 @@ export default function ChatPreview({info}) {
 
 
   return (
-    <div className='chat-preview'>
+    <div className='chat-preview' onClick={() => navigate(MESSENGER_ROUTE + info.id)}>
       <div className="chat-preview__image">
         <img src={srcImage} alt="chat-preview" />
       </div>

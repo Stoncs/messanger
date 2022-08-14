@@ -1,4 +1,5 @@
-const { Message } = require('../models/models');
+const { Message, User, User_chat } = require('../models/models');
+const { getMembers } = require('./chatController');
 
 class MessageController {
   async create(req, res) {
@@ -13,7 +14,26 @@ class MessageController {
   }
   async getAllMessagesChat(req, res) {
     const { chatId } = req.params;
-    const messagesChat = await Message.findAll({ where: { chatId } });
+    console.log('chatId', chatId);
+    // getting users
+    const users_chats = await User_chat.findAll({ where: { chatId } });
+    const userIds = [];
+    for (const obj of users_chats) {
+      const { userId } = obj;
+      userIds.push(userId);
+    }
+    console.log('userIds', userIds);
+    const messagesChat = await Message.findAll({
+      where: { chatId },
+      include: {
+        model: User,
+        attributes: ['id', 'username', 'avatar_image'],
+        where: {
+          id: userIds,
+        },
+      },
+    });
+    console.log(messagesChat);
     return res.json(messagesChat);
   }
 

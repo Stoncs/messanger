@@ -13,7 +13,7 @@ export default function AppRouter() {
         <>
           <Route path={MESSENGER_ROUTE} element={<Messenger />}>
             <Route index element={<EmptyChatPanel />} />
-            <Route path=":id" element={<ChatPanel />} />
+            <Route path=":chatId" element={<ChatPanel />} />
           </Route>
           <Route path={PROFILE_ROUTE} element={<Profile />} />
           <Route path={SETTINGS_ROUTE} element={<Settings />} />

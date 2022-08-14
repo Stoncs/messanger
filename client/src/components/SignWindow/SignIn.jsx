@@ -2,12 +2,12 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {setIsAuth, setUser} from '../../redux/actions/user';
-import { logIn } from '../../http/userApi';
+import { getUserById, logIn } from '../../http/userApi';
 import { MESSENGER_ROUTE, REGISTRATION_ROUTE } from '../../utils/consts';
 import './SignWindow.scss';
 
 export default function SignIn() {
-  const [nickname, setNickname] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,8 +15,9 @@ export default function SignIn() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await logIn(nickname, password);
-      dispatch(setUser(data));
+      const data = await logIn(username, password);
+      const user = await getUserById(data.id);
+      dispatch(setUser({...data, ...user}));
       dispatch(setIsAuth(true));
       navigate(MESSENGER_ROUTE);
     } catch (error) {
@@ -31,7 +32,7 @@ export default function SignIn() {
         <h1>Войти</h1>
         <div className='sign-form__input'>
           <label htmlFor='nickname'>Никнейм</label>
-          <input type="text" name='nickname' value={nickname} onChange={(e) => setNickname(e.target.value)} />
+          <input type="text" name='nickname' value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className='sign-form__input'>
           <label htmlFor='password'>Пароль</label>

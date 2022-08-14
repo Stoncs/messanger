@@ -5,11 +5,10 @@ import { getAllChatsForUser } from '../../http/chatApi';
 import { setIsAuth, setUser } from '../../redux/actions/user';
 import { LOGIN_ROUTE, PROFILE_ROUTE } from '../../utils/consts';
 import {ChatPreview, NewChatWindow} from '../index';
-import {} from 'moment';
 
 import './ChatList.scss';
 
-export default function ChatList({chatPreviews}) {
+export default function ChatList() {
   const user = useSelector(({user}) => user);
   const [creatingNewChat, setCreatingNewChat] = React.useState(false);
   const [chatsInfo, setChatsInfo] = React.useState({});
@@ -22,7 +21,6 @@ export default function ChatList({chatPreviews}) {
   };
 
   const getPreviews = () => {
-    console.log(typeof chatsInfo);
     const arr = [];
     if (Array.isArray(chatsInfo))
       for (const chatInfo of chatsInfo) {
@@ -32,6 +30,7 @@ export default function ChatList({chatPreviews}) {
   };
   React.useEffect(() => {
     getAllChatsForUser(user.info.id).then(result => setChatsInfo(result.allInfo));
+    // getAllChatsForUser(user.info.id).then(result => console.log(result.allInfo));
   }, []);
 
   return (

@@ -1,5 +1,4 @@
 import {$authHost} from './index';
-import jwt_decode from 'jwt-decode';
 
 export const createChat = async (title, userIds) => {
   const {data} = await $authHost.post('api/chats/', {title, userIds});
@@ -13,6 +12,7 @@ export const getAllChatsForUser = async (userId) => {
     const {data: lastMessage} = await $authHost.get(`api/messages/last/${chat.id}`);
     if (lastMessage[0]) {
       const {data: userInfo} = await $authHost.get(`api/users/${lastMessage[0].userId}`);
+      console.log({...chat, ...lastMessage[0]});
       allInfo.push({...chat, ...lastMessage[0], ...userInfo});
     } else {
       allInfo.push({...chat, ...lastMessage});
@@ -20,12 +20,6 @@ export const getAllChatsForUser = async (userId) => {
   }
   return {allInfo};
 };
-
-// export const logIn = async (username, password) => {
-//   const {data} = await $host.post('api/users/login', {username, password});
-//   localStorage.setItem('token', data.token);
-//   return jwt_decode(data.token);
-// };
 
 // export const check = async () => {
 //   const {data} = await $authHost.get('api/users/auth');

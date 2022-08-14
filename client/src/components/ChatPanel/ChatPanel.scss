@@ -12,3 +12,57 @@
   font-size: 12px;
   color: $clr-light;
 }
+
+.chat-panel {
+  background-color: $clr-background-light;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+  color: $clr-light;
+
+  &__header {
+    background-color: $clr-background-dark;
+    height: 40px;
+  }
+  &__messages-area {
+    overflow-y: scroll;
+    background-color: $clr-background-light;
+    flex-grow: 1;
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $clr-background-dark;
+    height: 100px;
+    
+  }
+
+  &__input {
+    flex-grow: 1;
+    margin-left: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 15px;
+    
+    textarea {
+      height: 50%;
+      width: 100%;
+      resize: none;
+      min-width: 300px;
+      background-color: $clr-background-dark;
+      color: $clr-grey
+    }
+  }
+
+  &__send-button {
+    height: 50%;
+    width: 12%;
+    min-width: 70px;
+    margin-right: 20px;
+  }
+}
