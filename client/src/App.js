@@ -7,12 +7,10 @@ import { check } from './http/userApi';
 import { setIsAuth, setUser } from './redux/actions/user';
 
 function App() {
-  const user = useSelector(({user}) => user);
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    console.log('check');
     check().then(data => {
       dispatch(setUser(data));
       dispatch(setIsAuth(true));

@@ -1,7 +1,8 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { ChatList, ChatPanel, EmptyChatPanel } from '../components';
 
-export default function Messanger() {
+export default function Messenger() {
   const chatPreviews = [
     {
       chatId: 1,
@@ -48,10 +49,7 @@ export default function Messanger() {
   return (
     <div className='wrapper flex-row' >
       <ChatList chatPreviews={chatPreviews} />
-      {selectedChat 
-        ? <ChatPanel />
-        : <EmptyChatPanel />
-      }
+      <Outlet />
     </div>
   );
 }

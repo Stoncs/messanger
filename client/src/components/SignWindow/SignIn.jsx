@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {setIsAuth, setUser} from '../../redux/actions/user';
 import { logIn } from '../../http/userApi';
-import { MESSANGER_ROUTE, REGISTRATION_ROUTE } from '../../utils/consts';
+import { MESSENGER_ROUTE, REGISTRATION_ROUTE } from '../../utils/consts';
 import './SignWindow.scss';
 
 export default function SignIn() {
@@ -18,9 +18,9 @@ export default function SignIn() {
       const data = await logIn(nickname, password);
       dispatch(setUser(data));
       dispatch(setIsAuth(true));
-      navigate(MESSANGER_ROUTE);
-    } catch (e) {
-      alert(e.response.data.message);
+      navigate(MESSENGER_ROUTE);
+    } catch (error) {
+      alert(error.response.data.message);
     }
 
   };

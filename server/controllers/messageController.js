@@ -16,10 +16,16 @@ class MessageController {
     const messagesChat = await Message.findAll({ where: { chatId } });
     return res.json(messagesChat);
   }
+
   async getLastMessageChat(req, res) {
     const { chatId } = req.params;
-    const messagesChat = await Message.findAll({ where: { chatId } });
-    return res.json((messagesChat.length && messagesChat[messagesChat.length - 1]) || {});
+    const lastMessageChat = await Message.findAll({
+      attributes: ['text', 'date', 'userId'],
+      where: { chatId },
+      order: [['date', 'DESC']],
+      limit: 1,
+    });
+    return res.json(lastMessageChat);
   }
 }
 

@@ -1,17 +1,23 @@
+const Sequelize = require('../db');
 const ApiError = require('../error/ApiError');
-const { Chat, User_chat, User } = require('../models/models');
+const { Chat, User_chat, User, Message } = require('../models/models');
 
 class ChatController {
   async create(req, res) {
+    // title: string, userIds: array
     const { title, userIds } = req.body;
+    console.log(req.body);
     const chat = await Chat.create({ title });
     const chatId = chat.id;
-
-    for (const userId of userIds) {
-      await User_chat.create({ userId, chatId });
-    }
+    await User_chat.bulkCreate(
+      userIds.map((userId) => ({
+        userId,
+        chatId,
+      })),
+    );
     return res.json(chat);
   }
+
   async getAll(req, res) {
     const chats = await Chat.findAll();
     console.log(chats);
@@ -20,13 +26,25 @@ class ChatController {
 
   async getAllChatsForUser(req, res) {
     const { userId } = req.params;
-    const chats_users = await User_chat.findAll({ where: { userId } });
-    const chatIds = [];
-    for (const chat of chats_users) {
-      chatIds.push(chat.id);
-    }
-    const chats = await Chat.findAll({ where: { id: chatIds } });
-    return res.json(chats);
+    console.log(req.params);
+    const chatIds = await User_chat.findAll({
+      attributes: ['chatId'],
+      where: {
+        userId,
+      },
+    });
+
+    const result = await Chat.findAll({
+      attributes: ['id', 'title', 'createdAt'],
+      where: {
+        id: [...chatIds.map((obj) => obj.dataValues.chatId)],
+      },
+    });
+
+    // const result = await Sequelize.query(
+    //   `SELECT chats.id, chats.title, messages.date, users.nickname, users.avatar_image FROM chats WHERE (${userId}, chats.id) IN (SELECT * FROM user_chats) JOIN messages ON chats.id = messages.chatId LEFT JOIN users ON messages.userId = ${userId}`,
+    // );
+    return res.json(result);
   }
 
   async getMembers(req, res) {

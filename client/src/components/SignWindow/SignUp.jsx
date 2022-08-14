@@ -11,8 +11,8 @@ export default function SingUp() {
     e.preventDefault();
     try {
       const user = await registration(nickname, password);
-    } catch (e) {
-      alert(e.response.data.message);
+    } catch (error) {
+      alert(error.response.data.message);
     }
   };
 
