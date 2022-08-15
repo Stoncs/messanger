@@ -15,7 +15,8 @@ Task: to make an application for users to communicate with each other
 
 ## Additional goals:
 
-- WebSoket ❌
+- Group chat ✅
 - Profile page with the ability to change the avatar, nickname ❌
 - Admins can remove chat members, change chat name, and delete chat ❌
-- Group chat ✅
+- WebSoket ❌
+- Add site to hosting ❌
