@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registration } from '../../http/userApi';
 import { LOGIN_ROUTE } from '../../utils/consts';
 
 export default function SingUp() {
   const [nickname, setNickname] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await registration(nickname, password);
+      await registration(nickname, password);
+      navigate(LOGIN_ROUTE);
     } catch (error) {
       alert(error.response.data.message);
     }

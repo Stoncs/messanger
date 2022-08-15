@@ -1,55 +1,39 @@
 import React from 'react';
+import ContentEditable from 'react-contenteditable';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getAllMessagesChat, sendMessage } from '../../http/messageApi';
 import { setSelectedChat } from '../../redux/actions/chats';
 import { MESSENGER_ROUTE } from '../../utils/consts';
-import {Message} from '../index';
+import {Message, DotsIcon, Popup} from '../index';
 
 import './ChatPanel.scss';
 
 export default function ChatPanel() {
   const chatsState = useSelector(({chats}) => chats);
   const user = useSelector(({user}) => user.info);
-  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
   const {chatId} = useParams();
   const [messages, setMessages] = React.useState([]);
   const [messageInput, setMessageInput] = React.useState('');
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (messageInput) {
       sendMessage(chatId, user.id, messageInput);
       setMessageInput('');
-      setMessages((prev) => [...prev, {
-        chatId,
-        date: Date.now(),
-        text: messageInput,
-        user: {
-          id: user.id,
-          username: user.username,
-          avatar_image: user.avatar_image
-        }
-      }]);
+      window.location.reload();
     }
-  };
 
-  // React.useEffect(() => {
-  //   if (chatsState.selectedChat.id) {
-  //     dispatch(setSelectedChat(JSON.parse(localStorage.getItem('selectedChat') || {})));
-  //   }
-  //   if (!chatsState.availableChats.map((item) => item.id).includes(Number(chatId))) {
-  //     console.log('redirectd');
-  //     navigate(MESSENGER_ROUTE);
-  //   }
-  // }, []);
+  };
 
   const $messagesArea = React.useRef();
   React.useEffect(() => {
     $messagesArea.current.scrollTop = $messagesArea.current.scrollHeight;
   }, [messages]);
+
 
   React.useEffect(() => {
     getAllMessagesChat(chatId).then((messages) => setMessages(messages));
@@ -59,6 +43,21 @@ export default function ChatPanel() {
     <div className='chat-panel'>
       <div className='chat-panel__header'>
         <div className='chat-panel__title' >{chatsState.selectedChat.title}</div>
+        <div className='header__toggle-button' onClick={() => setIsOpenPopup((prev) => !prev)}>
+          <DotsIcon />
+        </div>
+        {isOpenPopup &&
+          <div className='header__popup' onClick={() => setIsOpenPopup(false)}>
+            <Popup 
+              elements={[
+                {title: 'Добавить участников'},
+                {title: 'Удалить участников'},
+                {title: 'Переименновать чат'},
+                {title: 'Удалить чат'},
+              ]}
+            />
+          </div>
+        }
       </div>
       <div ref={$messagesArea} className='chat-panel__messages-area'>
         {messages.map((message) => <Message key={message.id} messageInfo={message} />)}

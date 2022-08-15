@@ -1,46 +1,32 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { getAllUsers } from '../../http/userApi';
-import { createChat } from '../../http/chatApi';
+import {InputField, UserLittlePreview, UserCard} from '../index';
 
-import './NewChatWindow.scss';
-import {UserCard, InputField, UserLittlePreview} from '../index';
+import './AddingMembersWindow.scss';
 
-export default function NewChatWindow({setCreatingNewChat}) {
-  const userId = useSelector(({user}) => user.info.id);
-  const [title, setTitle] = React.useState('');
-  const [searchField, setSearchField] = React.useState('');
-
-  const [users, setUsers] = React.useState([]);
+function AddingMembersWindow() {
+  const {userId} = useParams();
+  const [allUsers, setAllUsers] = React.useState([]);
+  const [members, setMembers] = React.useState([]);
   const [selectedUsers, setSelectedUsers] = React.useState([]);
-  
+
+  const [searchField, setSearchField] = React.useState([]);
+
   React.useEffect(() => {
-    getAllUsers().then((users) => setUsers(users));
+    getAllUsers().then((users) => setAllUsers(users));
   }, []);
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (title && selectedUsers.length) {
-      setCreatingNewChat(false);
-      const userIds = [userId, ...selectedUsers.map((selectedUser) => selectedUser.id)];
-      createChat(title, userIds);
-    }
   };
+  
   return (
     <>
       <div className='blackdrop' />
       <form className='new-chat-form' onSubmit={onSubmit}>
         <div className="new-chat-form__header">
           <h2>Создать новый чат</h2>
-          <div className='new-chat-form__input'>
-            <InputField 
-              type='text' 
-              name='title' 
-              labelText='Название'
-              value={title}
-              onChange={(e) => setTitle(e.target.value)} 
-              onSubmit={(e) => e.preventDefault()}/>
-          </div >
           <div className='new-chat-form__input search'>
             <InputField 
               type='text' 
@@ -59,7 +45,7 @@ export default function NewChatWindow({setCreatingNewChat}) {
         </div>
         <div className='new-chat-form__main'>
           <div className='new-chat-form__previews'>
-            {users.map((user) => (user.id !== userId && user.username.includes(searchField)) 
+            {allUsers.map((user) => (user.id !== userId && user.username.includes(searchField)) 
               ? selectedUsers.map((selectedUser) => selectedUser.id).includes(user.id)
                 ? <UserCard key={user.id} user={user} setSelectedUsers={setSelectedUsers} active={true}/>
                 : <UserCard key={user.id} user={user} setSelectedUsers={setSelectedUsers}/>
@@ -74,3 +60,5 @@ export default function NewChatWindow({setCreatingNewChat}) {
     </>
   );
 }
+
+export default AddingMembersWindow;

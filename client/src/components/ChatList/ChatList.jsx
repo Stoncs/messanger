@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getAllChatsForUser } from '../../http/chatApi';
 import { setAvailableChats } from '../../redux/actions/chats';
 import { setIsAuth, setUser } from '../../redux/actions/user';
-import { LOGIN_ROUTE, PROFILE_ROUTE } from '../../utils/consts';
+import { LOGIN_ROUTE, MESSENGER_ROUTE, PROFILE_ROUTE } from '../../utils/consts';
 import {ChatPreview, NewChatWindow} from '../index';
 
 import './ChatList.scss';
@@ -12,9 +12,9 @@ import './ChatList.scss';
 export default function ChatList() {
   const user = useSelector(({user}) => user);
   const chats = useSelector(({chats}) => chats);
+  const {chatId} = useParams();
 
   const [creatingNewChat, setCreatingNewChat] = React.useState(false);
-  const [chatsInfo, setChatsInfo] = React.useState([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,7 +44,14 @@ export default function ChatList() {
         }
       }
     };
-    getAllChatsForUser(user.info.id).then(result => dispatch(setAvailableChats(result.sort(compare))));
+    getAllChatsForUser(user.info.id).then(result => {
+      const availableChats = result.sort(compare);
+      // check if chatId from parameters not in availables chat go to MESSENGER_ROUTE
+      if (chatId && !availableChats.map((chat) => chat.id).includes(Number(chatId))) {
+        navigate(MESSENGER_ROUTE);
+      }
+      dispatch(setAvailableChats(availableChats));
+    });
   }, []);
 
   return (

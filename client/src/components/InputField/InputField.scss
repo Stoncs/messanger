@@ -1,0 +1,20 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.input-field {
+  width: 100%;
+  min-width: 100px;
+  padding: 10px 16px;
+  font-family: $font-roboto;
+  font-size: 13px;
+  background-color: $clr-background-light;
+  color: $clr-light;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+}

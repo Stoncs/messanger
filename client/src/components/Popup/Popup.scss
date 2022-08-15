@@ -1,0 +1,14 @@
+@import '../../styles/colors.scss';
+
+.popup {
+  background-color: $clr-background-dark;
+  cursor: pointer;
+
+  &__element {
+    padding: 10px;
+
+    &:hover {
+      background-color: $clr-background-contrast;
+    }
+  }
+}

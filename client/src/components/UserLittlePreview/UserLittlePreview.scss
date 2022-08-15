@@ -1,0 +1,33 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.user-little-preview {
+  height: 20px;
+  padding: 5px;
+  background-color: $clr-background-contrast;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+  &:not(:last-child) {
+    margin-right: 4px;
+  }
+
+  &__image {
+    display: block;
+    height: 15px;
+    width: 15px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  &__username {
+    margin-left: 10px;
+    font-family: $font-roboto;
+    color: black;
+    font-size: 13px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

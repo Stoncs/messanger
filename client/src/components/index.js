@@ -8,3 +8,8 @@ export {default as ChatPreview} from './ChatPreview/ChatPreview.jsx';
 export {default as NewChatWindow} from './NewChatWindow/NewChatWindow.jsx';
 export {default as UserCard} from './UserCard/UserCard.jsx';
 export {default as Message} from './Message/Message.jsx';
+export {default as InputField} from './InputField/InputField.jsx';
+export {default as UserLittlePreview} from './UserLittlePreview/UserLittlePreview.jsx';
+export {default as DotsIcon} from './DotsIcon/DotsIcon.jsx';
+export {default as Popup} from './Popup/Popup.jsx';
+export {default as AddingMembersWindow} from './AddingMembersWindow/AddingMembersWindow.jsx';
