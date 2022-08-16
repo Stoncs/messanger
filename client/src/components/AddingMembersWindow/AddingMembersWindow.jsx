@@ -54,7 +54,7 @@ function AddingMembersWindow() {
         </div>
         <div className="new-chat-form__buttons">
           <button className='btn' onClick={onSubmit}>Создать</button>
-          <button className='btn' onClick={() => setCreatingNewChat(false)}>Отмена</button>
+          <button className='btn' onClick={console.log('отмена')} >Отмена</button>
         </div>
       </form>
     </>

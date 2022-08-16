@@ -4,7 +4,7 @@ import { getAllUsers } from '../../http/userApi';
 import { createChat } from '../../http/chatApi';
 
 import './NewChatWindow.scss';
-import {UserCard, InputField, UserLittlePreview} from '../index';
+import {ShowUsersList, InputField, ShowSelectedUsers} from '../index';
 
 export default function NewChatWindow({setCreatingNewChat}) {
   const userId = useSelector(({user}) => user.info.id);
@@ -52,18 +52,14 @@ export default function NewChatWindow({setCreatingNewChat}) {
           </div>
           {selectedUsers.length
             ? <div className='new-chat-form__little-previews '>
-              {selectedUsers.map((selectedUser) => <UserLittlePreview key={selectedUser.id} user={selectedUser} />)}
+              <ShowSelectedUsers selectedUsers={selectedUsers} />
             </div>
             : ''
           }
         </div>
         <div className='new-chat-form__main'>
           <div className='new-chat-form__previews'>
-            {users.map((user) => (user.id !== userId && user.username.includes(searchField)) 
-              ? selectedUsers.map((selectedUser) => selectedUser.id).includes(user.id)
-                ? <UserCard key={user.id} user={user} setSelectedUsers={setSelectedUsers} active={true}/>
-                : <UserCard key={user.id} user={user} setSelectedUsers={setSelectedUsers}/>
-              : '')}
+            <ShowUsersList users={users} userId={userId} searchField={searchField} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} /> 
           </div>
         </div>
         <div className="new-chat-form__buttons">

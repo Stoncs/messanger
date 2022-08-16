@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getAllMessagesChat, sendMessage } from '../../http/messageApi';
 import { setSelectedChat } from '../../redux/actions/chats';
 import { MESSENGER_ROUTE } from '../../utils/consts';
-import {Message, DotsIcon, Popup} from '../index';
+import {Message, DotsIcon, Popup, ConfirmWindow} from '../index';
 
 import './ChatPanel.scss';
 
@@ -18,6 +18,7 @@ export default function ChatPanel() {
   const [messages, setMessages] = React.useState([]);
   const [messageInput, setMessageInput] = React.useState('');
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
+  const [confirmationRequired, setConfirmationRequired] = React.useState({message: 'Уверены, что хотите удалить чат?', onConfirm: () => console.log('че ты наделал..')});
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +54,7 @@ export default function ChatPanel() {
                 {title: 'Добавить участников'},
                 {title: 'Удалить участников'},
                 {title: 'Переименновать чат'},
+                {title: 'Выйти из чата'},
                 {title: 'Удалить чат'},
               ]}
             />
@@ -68,8 +70,9 @@ export default function ChatPanel() {
         </form>
         <button onClick={onSubmit} className='btn chat-panel__send-button'>Отправить</button>
       </div>
-
-      
+      {confirmationRequired &&
+        <ConfirmWindow info={{...confirmationRequired, setConfirmationRequired}}/>
+      }
     </div>
   );
 }

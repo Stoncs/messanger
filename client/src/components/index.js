@@ -13,3 +13,6 @@ export {default as UserLittlePreview} from './UserLittlePreview/UserLittlePrevie
 export {default as DotsIcon} from './DotsIcon/DotsIcon.jsx';
 export {default as Popup} from './Popup/Popup.jsx';
 export {default as AddingMembersWindow} from './AddingMembersWindow/AddingMembersWindow.jsx';
+export {default as ConfirmWindow} from './ConfirmWindow/ConfirmWindow.jsx';
+export {default as ShowSelectedUsers} from './ShowSelectedUsers/ShowSelectedUsers.jsx';
+export {default as ShowUsersList} from './ShowUsersList/ShowUsersList.jsx';
